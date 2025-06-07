@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="Photogenix AI by Kav Labs – Transform product images into professional model-based visuals with AI." />
+  <meta name="keywords" content="AI product photos, virtual models, background removal, image enhancement, e-commerce visuals, photogenix, Kav Labs, Instagram, X, twitter, AI" />
+  <meta name="author" content="Kav Labs Technologies Pvt. Ltd." />
+  <meta property="og:title" content="Photogenix AI – Kav Labs Technologies" />
+  <meta property="og:description" content="Transform product images into stunning, model-based visuals using AI. Perfect for e-commerce and social media." />
+  <meta property="og:image" content="https://yourdomain.com/imgs/preview-image.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Photogenix AI by Kav Labs" />
+  <meta name="twitter:description" content="AI-powered model visuals for your product photos." />
+  <meta name="twitter:image" content="https://yourdomain.com/imgs/preview-image.jpg" />
+  <title>Photogenix AI – Kav Labs Technologies</title>
+  <link rel="canonical" href="https://yourdomain.com/" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0C0305;
+      color: white;
+    }
+    .photogenix-gradient {
+      background: linear-gradient(90deg, #F7374F, #0C0305);
+    }
+
+    /* Desktop “before/after” slider */
+    .bal-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 1rem;
+      overflow: hidden;
+      height: 400px;
+      flex-shrink: 0;
+    }
+    .slider-wrapper {
+      width: 100vw;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .mainSection {
+      display: flex;
+      will-change: transform;
+      /* Desktop animation */
+      animation: scrollSlider 20s linear infinite;
+      /* iOS/Safari */
+      -webkit-animation: scrollSlider 20s linear infinite;
+    }
+
+    /* Hardware-acceleration hints */
+    .bal-after img,
+    .bal-before-inset img {
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+
+    .slider-wrapper:hover .mainSection {
+      animation-play-state: paused;
+    }
+
+    @-webkit-keyframes scrollSlider {
+      0%   { -webkit-transform: translateX(0vw); }
+      100% { -webkit-transform: translateX(-390%); }
+    }
+    @keyframes scrollSlider {
+      0%   { transform: translateX(0vw); }
+      100% { transform: translateX(-390%); }
+    }
+
+    /* Media box (images/videos) */
+    .media-box {
+      aspect-ratio: 1/1;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      max-width: 100%;
+      position: relative;
+    }
+    .media-box img,
+    .media-box video {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .overlay-image {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+      width: auto;
+      height: 30%;
+      z-index: 10;
+      border: 1px solid white;
+      border-radius: 4px;
+    }
+
+    /* ─── MOBILE: STACKED GALLERY ─── */
+    @media (max-width: 768px) {
+      /* Turn off the animation and flex layout */
+      .mainSection {
+        animation: none !important;
+        -webkit-animation: none !important;
+        display: block !important;
+      }
+
+      /* Allow full vertical scroll */
+      .slider-wrapper {
+        width: 100% !important;
+        overflow: visible !important;
+        margin: 0 auto;
+      }
+
+      /* Stack each image container full-width */
+      .bal-container {
+        flex: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 1rem !important;  /* spacing between items */
+        overflow: visible;
+        position: static;
+        height: auto !important;       /* let content dictate height */
+      }
+      /* Make sure inner images scale responsively */
+      .bal-container img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      /* If you need to tweak the overlay on mobile */
+      .overlay-image {
+        height: 25%;
+        top: 3%;
+        left: 3%;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="css/beforeafter.css" />
+  <style>
+  @media (max-width: 768px) {
+    /* 1) Wrapper: clip to exactly one viewport at a time */
+    .slider-wrapper {
+      width: 100vw !important;
+      overflow: hidden !important;
+      margin: 0 auto 2rem !important;
+      padding: 0 !important;
+    }
+
+    /* 2) Turn mainSection back into a horizontal flex carousel */
+    .mainSection {
+      display: flex !important;
+      flex-direction: row !important;      /* override any column setting */
+      flex-wrap: nowrap !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      padding: 0 !important;               /* drop desktop padding */
+      height: auto !important;             /* let content size */
+      animation: scrollMobile 36s steps(12, end) infinite !important;
+      -webkit-animation: scrollMobile 36s steps(12, end) infinite !important;
+    }
+
+    /* 3) Each slide = full viewport width */
+    .bal-container {
+      flex: 0 0 100vw !important;
+      max-width: 100vw !important;
+      margin: 0 !important;
+      height: 300px !important;            /* choose your mobile height */
+      overflow: hidden !important;
+      position: relative !important;
+    }
+  }
+
+  /* 5) New keyframes for mobile sliding */
+  @keyframes scrollMobile {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-100vw * 12)); }  /* 12 slides total */
+  }
+  @-webkit-keyframes scrollMobile {
+    from { -webkit-transform: translateX(0); }
+    to   { -webkit-transform: translateX(calc(-100vw * 12)); }
+  }
+  @media (max-width: 768px) {
+    /* 1) Let the outer carousel only scroll vertically (so horizontal drags go to the handle) */
+    .slider-wrapper {
+      touch-action: pan-y !important;
+    }
+
+    /* 2) Re-enable the before/after handle inside each slide */
+    .bal-handle {
+      display: block !important;         /* make sure it’s visible */
+      pointer-events: auto !important;   /* let it receive touch events */
+      cursor: ew-resize !important;      /* show the left/right grab cursor */
+    }
+
+    /* 3) Prevent the bal-container itself from stealing touch events */
+    .bal-container {
+      touch-action: none !important;
+    }
+
+    /* 4) Ensure the before/after layers can move when dragging */
+    .bal-before,
+    .bal-after {
+      touch-action: none !important;
+    }
+  }
+  </style>
+</head>
+
+<body>
+  <section class="photogenix-gradient text-white py-20 px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+      <img src="photogenixailogo.png" alt="Photogenix AI Logo" class="mx-auto mb-6 w-150" />
+      <p class="text-lg mb-6 max-w-2xl mx-auto">
+        Transform your product shots into stunning, model-based e-commerce visuals — powered by our proprietary AI engine. No photoshoots. No editing. Just results.
+      </p>
+      <!-- <a href="#features" class="bg-white text-red-700 font-bold py-3 px-6 rounded hover:bg-gray-100">Explore Features</a> -->
+    </div>
+  </section>
+
+  <section id="features" class="py-16 px-6 bg-black text-white">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-4xl font-extrabold mb-6 text-white tracking-tight">What Can <span class="text-pink-500">Photogenix AI</span> Do for You?</h2>
+      <ul class="space-y-6 text-lg text-gray-300 leading-relaxed">
+        <li><span class="text-pink-400 font-semibold">✨ Virtual Model Magic:</span> Transform simple product shots into eye-catching images with photorealistic virtual models.</li>
+        <li><span class="text-pink-400 font-semibold">🏞 Background Perfection:</span> Drop your product into high-end lifestyle scenes or crisp studio environments in seconds.</li>
+        <li><span class="text-pink-400 font-semibold">⚡ Instant Enhancements:</span> Boost lighting, sharpen details, and upscale quality automatically — no Photoshop needed.</li>
+        <li><span class="text-pink-400 font-semibold">📲 Optimized for Every Platform:</span> Get image formats tailored for Instagram, Amazon, Flipkart & more.</li>
+        <li><span class="text-pink-400 font-semibold">🖱 Just Click & Go:</span> No design skills? No problem. Upload your image, and download ready-to-post visuals in minutes.</li>
+      </ul>
+    </div>
+    <div class="text-center">
+      <img src="imgs/offerings.png" alt="Photogenix AI Features" class="rounded-lg shadow-lg mx-auto" />
+    </div>
+  </div>
+</section>
+
+
+  <section class="py-16 bg-gray-900 text-white">
+    <h2 class="text-3xl font-bold text-center mb-4">Product to Photoshoot Transformation</h2>
+    <p class="text-center text-gray-400 max-w-3xl mx-auto mb-10">See how Photogenix AI converts static product images into scroll-stopping model-based visuals that look like real photoshoots.</p>
+    <div class="slider-wrapper">
+      <div class="mainSection">
+        <!-- Existing slider content remains here -->
+        <div id="one" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/after1.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/before1.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="two" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/after2.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/before2.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="three" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out1.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in1.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="four" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out2.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in2.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="five" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out3.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in3.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="six" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out4.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in4.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="seven" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out6.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in6.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="eight" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out7.png" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in7.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="nine" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out8.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in8.JPG" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="ten" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out9.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in9.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="eleven" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out10.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in10.jpeg" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+        <div id="twelve" class="bal-container">
+          <div class="bal-after">
+            <img src="imgs/out11.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+            <div class="bal-afterPosition afterLabel">After</div>
+          </div>
+          <div class="bal-before">
+            <div class="bal-before-inset">
+              <img src="imgs/in11.webp" style="object-fit: contain; object-position: center; background-color: black; width: 100%; height: 100%;" />
+              <div class="bal-beforePosition beforeLabel">Before</div>
+            </div>
+          </div>
+          <div class="bal-handle">
+            <span class="handle-left-arrow"></span>
+            <span class="handle-right-arrow"></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-6 bg-black text-white text-center">
+    <h2 class="text-3xl font-bold mb-4">Image to Reels/Ad-Ready Video Photoshoot</h2>
+    <p class="max-w-2xl mx-auto text-gray-400 mb-10">Transform plain product shots into dynamic video mockups perfect for Instagram Reels, Facebook Ads, or brand campaigns. Our AI styles and animates them into realistic, engaging content.</p>
+    <div class="grid md:grid-cols-2 gap-10 items-center justify-center max-w-5xl mx-auto">
+      <div class="media-box rounded-lg shadow-lg mx-auto">
+        <video autoplay loop muted playsinline>
+          <source src="imgs/22fvid.mp4" type="video/mp4" />
+        </video>
+        <img src="imgs/before2.jpeg" alt="Input Image" class="overlay-image" />
+      </div>
+      <div class="media-box rounded-lg shadow-lg mx-auto">
+        <video autoplay loop muted playsinline>
+          <source src="imgs/part1.mp4" type="video/mp4" />
+        </video>
+        <img src="imgs/boot.webp" alt="Input Image 2" class="overlay-image" />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 text-center photogenix-gradient">
+    <h2 class="text-2xl font-bold mb-4">Ready to Elevate Your Product Photography?</h2>
+    <p class="mb-6 max-w-xl mx-auto">Start your journey with Photogenix AI today — and convert more customers with premium visuals.</p>
+    <a href="https://wa.me/919516666208?text=Hi%20Photogenix%20AI,%20I%20would%20like%20a%20demo!" target="_blank" class="bg-white text-red-700 font-bold py-3 px-6 rounded hover:bg-gray-100">Request a Demo</a>
+  </section>
+
+  <footer class="py-8 text-center text-gray-400 bg-black">
+    <p>© 2025 Kav Labs Technologies Pvt. Ltd.</p>
+    <p>Photogenix AI | kavlabs@kavlabstech.com</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.bal-container').forEach(container => {
+        // each container must have an id like “one”, “two”, etc.
+        new BeforeAfter({ id: `#${container.id}` });
+      });
+    });
+  </script>
+  <!-- Floating social/chat buttons -->
+  <div class="fixed bottom-4 right-4 flex flex-col items-end space-y-2 z-50">
+    <!-- WhatsApp -->
+    <a href="https://wa.me/919516666208?text=Hi%20Photogenix%20AI,%20I%20would%20like%20a%20demo!"
+       target="_blank"
+       class="block p-2 rounded-full shadow-lg hover:opacity-90">
+      <img src="wa.png" alt="WhatsApp" class="w-12 h-12"/>
+    </a>
+    <!-- Instagram -->
+    <a href="https://instagram.com/photogenix_ai"
+       target="_blank"
+       class="block p-2 rounded-full shadow-lg hover:opacity-90">
+      <img src="insta.png" alt="Instagram" class="w-12 h-12"/>
+    </a>
+  </div>
+
+</body>
+</html>
